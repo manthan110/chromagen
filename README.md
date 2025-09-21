@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Project Abstract:
 
 ChromaGen is an AI-powered tool designed to streamline and inspire the color palette creation process for designers and developers. Color plays a vital role in user experience, influencing emotion, guiding attention, and ensuring accessibility. However, crafting aesthetically pleasing palettes that also comply with accessibility standards such as WCAG is often time-consuming and requires manual effort.
@@ -31,3 +32,6 @@ Frontend: React.JS, Vite.JS, Tailwind CSS, Shad CN, Framer Motion, HTML, CSS
 Backend: Express.JS, Node.JS, Postgre SQL
 APIs: Colormind 
 Library: Colorthief
+=======
+# chromagen
+>>>>>>> 72f458509f229beb9d566a2443c5b315d1dc8443
