@@ -1,10 +1,8 @@
 import { motion } from "framer-motion";
-import { Eye, AlertTriangle, CheckCircle, Settings } from "lucide-react";
+import { Eye,AlertTriangle, CheckCircle} from "lucide-react";
 import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Switch } from "@/components/ui/switch";
-import { useState } from "react";
+
 
 interface Color {
   name: string;
@@ -47,27 +45,28 @@ function getWcagLevel(ratio: number) {
 }
 
 export const AccessibilityPanel = ({ palette }: AccessibilityPanelProps) => {
-  const [colorBlindnessMode, setColorBlindnessMode] = useState(false);
+
 
   // Calculate contrast for each palette color vs. white and black backgrounds
   const bgColors = [
     { name: 'White', rgb: [255, 255, 255], hex: '#ffffff' },
     { name: 'Black', rgb: [0, 0, 0], hex: '#000000' },
   ];
-  const contrastResults = palette.flatMap((color) => {
+  const contrastResults=palette.flatMap((color:Color)=> {
     const rgb = hexToRgb(color.hex);
-    return bgColors.map(bg => {
-      const ratio = contrastRatio(rgb, bg.rgb);
-      const ratioStr = ratio.toFixed(2) + ':1';
-      const wcag = getWcagLevel(ratio);
+    return bgColors.map((bg:{ name: string; rgb:[number,number,number]; hex:string }) => {
+      const ratio=contrastRatio(rgb, bg.rgb);
+      const ratioStr=ratio.toFixed(2)+":1";
+      const wcag=getWcagLevel(ratio);
+
       return {
         combination: `${color.name} on ${bg.name}`,
         ratio: ratioStr,
         level: wcag.level,
         status: wcag.status,
       };
-    });
   });
+});
 
   return (
     <motion.div
@@ -78,7 +77,7 @@ export const AccessibilityPanel = ({ palette }: AccessibilityPanelProps) => {
       <Card className="p-6 shadow-elegant">
         <div className="flex items-center gap-2 mb-6">
           <Eye className="h-5 w-5 text-primary" />
-          <h2 className="text-xl font-bold text-foreground">Accessibility Tools</h2>
+          <h2 className="text-xl font-bold text-foreground">WCAG Accessibility Validator</h2>
         </div>
 
         <div className="space-y-6">
@@ -86,7 +85,7 @@ export const AccessibilityPanel = ({ palette }: AccessibilityPanelProps) => {
           <div>
             <h3 className="text-lg font-semibold mb-4">WCAG Contrast Ratios</h3>
             <div className="space-y-3">
-              {contrastResults.map((result, index) => (
+              {contrastResults.map((result:any , index) => (
                 <div key={index} className="flex items-center justify-between p-3 bg-muted rounded-lg">
                   <div>
                     <p className="font-medium text-sm">{result.combination}</p>
@@ -105,41 +104,6 @@ export const AccessibilityPanel = ({ palette }: AccessibilityPanelProps) => {
                 </div>
               ))}
             </div>
-          </div>
-
-          {/* Color Blindness Simulation */}
-          <div>
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold">Color Blindness Simulation</h3>
-              <Switch
-                checked={colorBlindnessMode}
-                onCheckedChange={setColorBlindnessMode}
-              />
-            </div>
-            <p className="text-sm text-muted-foreground mb-3">
-              Preview how your palette appears to users with color vision deficiencies.
-            </p>
-            {colorBlindnessMode && (
-              <div className="p-3 bg-muted rounded-lg">
-                <p className="text-sm text-muted-foreground">
-                  🔄 Color blindness simulation active
-                  <br />
-                  <em>This feature will be connected to backend processing</em>
-                </p>
-              </div>
-            )}
-          </div>
-
-          {/* API Integration Placeholder */}
-          <div className="border-t pt-4">
-            <Button variant="outline" className="w-full" disabled>
-              <Settings className="h-4 w-4 mr-2" />
-              Advanced Accessibility Audit
-              <Badge variant="secondary" className="ml-2">Coming Soon</Badge>
-            </Button>
-            <p className="text-xs text-muted-foreground mt-2 text-center">
-              Full accessibility audit will be available when connected to backend API
-            </p>
           </div>
         </div>
       </Card>

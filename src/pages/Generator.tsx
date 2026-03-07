@@ -204,9 +204,7 @@ const defaultInput = [[44,43,44],[90,83,82],"N","N","N"];
                 </div>
 
                 {/* API Integration Note */}
-                <div className="text-xs text-muted-foreground p-3 bg-muted rounded-lg">
-                  💡 This demo shows a mock palette. Connect to your AI backend API to enable real palette generation.
-                </div>
+                
               </Card>
             </motion.div>
 
