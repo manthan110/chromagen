@@ -58,12 +58,22 @@ export const AccessibilityPanel = ({ palette }: AccessibilityPanelProps) => {
       const ratio=contrastRatio(rgb, bg.rgb);
       const ratioStr=ratio.toFixed(2)+":1";
       const wcag=getWcagLevel(ratio);
+      const whiteRatio = contrastRatio(rgb, [255, 255, 255]);
+      const blackRatio = contrastRatio(rgb, [0, 0, 0]);
+
+      const bestTextColor =
+         whiteRatio > blackRatio ? "White" : "Black";
+
+        const bestContrast =
+          whiteRatio > blackRatio ? whiteRatio : blackRatio;
 
       return {
         combination: `${color.name} on ${bg.name}`,
         ratio: ratioStr,
         level: wcag.level,
         status: wcag.status,
+        bestTextColor:bestTextColor,
+        bestContrast: bestContrast.toFixed(2),
       };
   });
 });
@@ -90,6 +100,7 @@ export const AccessibilityPanel = ({ palette }: AccessibilityPanelProps) => {
                   <div>
                     <p className="font-medium text-sm">{result.combination}</p>
                     <p className="text-xs text-muted-foreground">Ratio: {result.ratio}</p>
+                    <p className="text-xs text-muted-foreground">Best Text Color: {result.bestTextColor}</p>
                   </div>
                   <div className="flex items-center gap-2">
                     <Badge variant={result.status === "pass" ? "default" : "secondary"}>
